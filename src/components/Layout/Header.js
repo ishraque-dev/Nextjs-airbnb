@@ -16,26 +16,27 @@ export default function Header() {
   const dropdownRef = useRef();
   const [open, setOpen] = useCloseDropdown(dropdownRef);
   return (
-    <header className="px-3 py-3 shadow md:px-0 lg:py-1">
+    <header className="sticky top-0  z-50  bg-white  px-3  py-3 shadow md:px-2 lg:py-1">
       <div className="container flex items-center justify-between">
-        <div className="mr-2 w-[35%]">
+        <div className="mr-2 w-[40%]">
           {/* left */}
 
           <Image
             src="/images/airbnblogo.png"
             alt="logo"
-            width="100"
-            height="100"
+            width="130"
+            height="130"
+            className=""
           />
         </div>
-        <div className="border-black-400 flex w-[100%] items-center rounded-full border px-3  py-1 md:w-[50%] ">
+        <div className="border-black-400 flex w-[100%] items-center rounded-full border px-3  py-1 md:w-[40%] ">
           {/* middle */}
           <input
             type="text"
             placeholder="Search"
             className=" w-full  outline-none"
           />
-          <div className="rounded-full bg-[#FF385C] p-1">
+          <div className="rounded-full bg-[#FF385C] p-[1px] md:p-1">
             <FiSearch className="text-white md:text-xl" />
           </div>
         </div>
@@ -55,8 +56,8 @@ export default function Header() {
             }}
             className=" flex cursor-pointer gap-x-1 rounded-full border border-[#ccc] p-2 hover:shadow-lg"
           >
-            <AiOutlineBars className="text-[#717171] md:text-xl" />
-            <FaUserAlt className="text-[#717171] md:text-xl" />
+            <AiOutlineBars className="text-sm text-[#717171] md:text-xl" />
+            <FaUserAlt className="text-sm text-[#717171] md:text-xl" />
           </div>
           {open && (
             <div className="absolute top-14">

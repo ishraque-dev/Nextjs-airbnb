@@ -10,9 +10,13 @@ export default function Banner() {
         className=""
       />
       <div className="absolute top-1/2 w-full text-center">
-        <p className="text-white">Not sure where to go? Perfect.</p>
+        <div>
+          <p className="inline-block rounded-full text-white shadow-lg">
+            Not sure where to go? Perfect.
+          </p>
+        </div>
         <button className="my-3 rounded-full bg-white px-6 py-2 font-bold text-[#FF385C] shadow-md transition duration-150 hover:shadow-xl active:scale-90 ">
-          Be flexible
+          Take me
         </button>
       </div>
     </div>
