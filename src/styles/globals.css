@@ -5,4 +5,29 @@
 body {
   font-family: 'Poppins', sans-serif;
 }
- 
+.dialog-enter {
+  opacity: 0.01;
+  transform: scale(1.1);
+}
+
+.dialog-enter-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: all 300ms;
+}
+
+.dialog-exit {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.dialog-exit-active {
+  opacity: 0.01;
+  transform: scale(1.1);
+  transition: all 300ms;
+}
+@media (max-width: 767px) {
+  .rdrDefinedRangesWrapper {
+    display: none !important;
+  }
+}

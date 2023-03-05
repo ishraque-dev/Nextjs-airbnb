@@ -1,11 +1,15 @@
 import Image from 'next/image';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import { FiSearch } from 'react-icons/fi';
 import { RiEarthFill } from 'react-icons/ri';
 import { AiOutlineBars } from 'react-icons/ai';
 import { FaUserAlt } from 'react-icons/fa';
 import HeaderDropDown from '../UI/HeaderDropDown';
 import useCloseDropdown from '@/hooks/useCloseDropdown';
+import 'react-date-range/dist/styles.css'; // main style file
+import 'react-date-range/dist/theme/default.css'; // theme css file
+import { DateRangePicker } from 'react-date-range';
 export default function Header() {
   const fakeItems = [
     { name: 'Airbnb you home' },
@@ -15,6 +19,25 @@ export default function Header() {
 
   const dropdownRef = useRef();
   const [open, setOpen] = useCloseDropdown(dropdownRef);
+  const [searchInput, setSearchInput] = useState('');
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+  const selectionRange = {
+    startDate: startDate,
+    endDate: endDate,
+    keys: 'selection',
+  };
+  const handleSelect = (ranges) => {
+    const {
+      range1: { startDate },
+    } = ranges;
+    console.log(startDate);
+    const {
+      range1: { endDate },
+    } = ranges;
+    setStartDate(startDate);
+    setEndDate(endDate);
+  };
   return (
     <header className="sticky top-0  z-50  bg-white  px-3  py-3 shadow md:px-2 lg:py-1">
       <div className="container flex items-center justify-between">
@@ -32,6 +55,8 @@ export default function Header() {
         <div className="border-black-400 flex w-[100%] items-center rounded-full border px-3  py-1 md:w-[40%] ">
           {/* middle */}
           <input
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
             type="text"
             placeholder="Search"
             className=" w-full  outline-none"
@@ -66,6 +91,21 @@ export default function Header() {
           )}
         </div>
       </div>
+      <TransitionGroup component={null}>
+        {searchInput && (
+          <CSSTransition classNames="dialog" timeout={300}>
+            <div className="ml-auto text-center">
+              <DateRangePicker
+                ranges={[selectionRange]}
+                minDate={new Date()}
+                rangeColors={['#FF385C']}
+                onChange={handleSelect}
+                className="flex  flex-col md:flex-row"
+              />
+            </div>
+          </CSSTransition>
+        )}
+      </TransitionGroup>
     </header>
   );
 }
