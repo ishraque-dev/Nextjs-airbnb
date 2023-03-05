@@ -1,8 +1,14 @@
 import Banner from '@/components/Layout/Banner';
 import Header from '@/components/Layout/Header';
+import MediumCard from '@/components/UI/MediumCard';
 import SmallCard from '@/components/UI/SmallCard';
 import Head from 'next/head';
-export default function Home({ exploreData }) {
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import LargeCard from '@/components/UI/LargeCard';
+import Footer from '@/components/Layout/Footer';
+export default function Home({ exploreData, cardsData }) {
   console.log(exploreData);
   return (
     <>
@@ -29,7 +35,24 @@ export default function Home({ exploreData }) {
               ))}
             </div>
           </section>
+          <section>
+            <h2 className="p-5 text-3xl font-semibold">Live Anywhere</h2>
+            <Swiper slidesPerView={3} className="flex " spaceBetween={10}>
+              {cardsData?.map((item) => (
+                <SwiperSlide key={item.title}>
+                  <MediumCard img={item.img} title={item.title} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </section>
+          <LargeCard
+            img="https://links.papareact.com/4cj"
+            title="The Greatest Outdoors"
+            description="Wishlist created by airbnb"
+            buttonText="Get Inspired"
+          />
         </main>
+        <Footer />
       </div>
     </>
   );
@@ -38,9 +61,14 @@ export async function getStaticProps() {
   const exploreData = await fetch(`https://www.jsonkeeper.com/b/4G1G`).then(
     (res) => res.json()
   );
+  const cardsData = await fetch('https://www.jsonkeeper.com/b/VHHT').then(
+    (res) => res.json()
+  );
+
   return {
     props: {
       exploreData,
+      cardsData,
     },
   };
 }
