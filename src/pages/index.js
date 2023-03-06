@@ -17,7 +17,7 @@ export default function Home({ exploreData, cardsData }) {
           <title>Airbnb 2.0</title>
         </Head>
         {/* header */}
-        <Header />
+
         {/* banner */}
         <Banner />
         {/* main section */}
@@ -52,7 +52,6 @@ export default function Home({ exploreData, cardsData }) {
             buttonText="Get Inspired"
           />
         </main>
-        <Footer />
       </div>
     </>
   );
