@@ -4,7 +4,7 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import { FiSearch } from 'react-icons/fi';
 import { RiEarthFill } from 'react-icons/ri';
 import { AiOutlineBars } from 'react-icons/ai';
-import { FaUserAlt } from 'react-icons/fa';
+import { FaUserAlt, FaUserFriends } from 'react-icons/fa';
 import HeaderDropDown from '../UI/HeaderDropDown';
 import useCloseDropdown from '@/hooks/useCloseDropdown';
 import 'react-date-range/dist/styles.css'; // main style file
@@ -19,6 +19,7 @@ export default function Header() {
 
   const dropdownRef = useRef();
   const [open, setOpen] = useCloseDropdown(dropdownRef);
+  const [numOfGust, setNubOfGust] = useState(1);
   const [searchInput, setSearchInput] = useState('');
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -39,7 +40,7 @@ export default function Header() {
     setEndDate(endDate);
   };
   return (
-    <header className="sticky top-0  z-50  bg-white  px-3  py-3 shadow md:px-2 lg:py-1">
+    <header className="sticky top-0  z-50  bg-white  px-3  py-3 shadow backdrop-blur md:px-2 lg:py-1 ">
       <div className="container flex items-center justify-between">
         <div className="mr-2 w-[40%]">
           {/* left */}
@@ -94,15 +95,46 @@ export default function Header() {
       <TransitionGroup component={null}>
         {searchInput && (
           <CSSTransition classNames="dialog" timeout={300}>
-            <div className="ml-auto text-center">
-              <DateRangePicker
-                ranges={[selectionRange]}
-                minDate={new Date()}
-                rangeColors={['#FF385C']}
-                onChange={handleSelect}
-                className="flex  flex-col md:flex-row"
-              />
-            </div>
+            <>
+              <div className="ml-auto text-center">
+                <DateRangePicker
+                  ranges={[selectionRange]}
+                  minDate={new Date()}
+                  rangeColors={['#FF385C']}
+                  onChange={handleSelect}
+                  className="flex  flex-col md:flex-row"
+                />
+                <div className="mx-auto mb-3 flex w-[50%] items-center justify-between border-b">
+                  <h3 className="text-base font-semibold md:text-xl lg:text-2xl ">
+                    Number of Gusts:
+                  </h3>
+                  <div
+                    className="gap3 flex
+                    items-center
+                  "
+                  >
+                    <FaUserFriends className="md:text-xl" />
+                    <input
+                      type="number"
+                      className="w-12 pl-2 text-red-400 outline-none lg:text-lg"
+                      value={numOfGust}
+                      onChange={(e) => setNubOfGust(e.target.value)}
+                      min={1}
+                      max={6}
+                    />
+                  </div>
+                </div>
+                <div className="flex">
+                  <button
+                    className="flex-grow font-semibold text-red-400"
+                    onClick={() => setSearchInput('')}
+                  >
+                    Cancel
+                  </button>
+                  <button className="flex-grow font-semibold">Search</button>
+                </div>
+              </div>
+            </>
           </CSSTransition>
         )}
       </TransitionGroup>
