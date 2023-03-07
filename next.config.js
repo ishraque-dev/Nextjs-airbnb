@@ -4,7 +4,7 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        hostname: 'links.papareact.com',
+        hostname: ['links.papareact.com', 'https://www.jsonkeeper.com/b/5NPS'],
       },
     ],
   },

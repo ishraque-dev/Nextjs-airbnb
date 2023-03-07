@@ -5,12 +5,14 @@ import { FiSearch } from 'react-icons/fi';
 import { RiEarthFill } from 'react-icons/ri';
 import { AiOutlineBars } from 'react-icons/ai';
 import { FaUserAlt, FaUserFriends } from 'react-icons/fa';
+import { useRouter } from 'next/router';
 import HeaderDropDown from '../UI/HeaderDropDown';
 import useCloseDropdown from '@/hooks/useCloseDropdown';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { DateRangePicker } from 'react-date-range';
 export default function Header() {
+  const router = useRouter();
   const fakeItems = [
     { name: 'Airbnb you home' },
     { name: 'Host an experience' },
@@ -96,7 +98,7 @@ export default function Header() {
         {searchInput && (
           <CSSTransition classNames="dialog" timeout={300}>
             <>
-              <div className="ml-auto text-center">
+              <div className="flex flex-col items-center">
                 <DateRangePicker
                   ranges={[selectionRange]}
                   minDate={new Date()}
@@ -124,14 +126,33 @@ export default function Header() {
                     />
                   </div>
                 </div>
-                <div className="flex">
+                <div className="mb-3 flex w-full justify-between">
                   <button
                     className="flex-grow font-semibold text-red-400"
                     onClick={() => setSearchInput('')}
                   >
                     Cancel
                   </button>
-                  <button className="flex-grow font-semibold">Search</button>
+                  <button
+                    className="flex-grow font-semibold"
+                    onClick={() => {
+                      router
+                        .push({
+                          pathname: '/search',
+                          query: {
+                            location: searchInput,
+                            startDate: startDate.toISOString(),
+                            endDate: endDate.toISOString(),
+                            numOfGust,
+                          },
+                        })
+                        .then(() => {
+                          setSearchInput('');
+                        });
+                    }}
+                  >
+                    Search
+                  </button>
                 </div>
               </div>
             </>
